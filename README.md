@@ -93,9 +93,7 @@ To get a local copy up and running follow these simple example steps.
 ### Prerequisites
 
 There are n prerequisites.
-* npm
   ```sh
-  npm install npm@latest -g
   ```
 
 ### Installation
@@ -103,12 +101,11 @@ There are n prerequisites.
     1. Clone repository
     2. Assign permissions
     3. Run install
-  
-    ```sh
+  ```sh
     git clone https://github.com/batann/lc-bin
     sudo chmod a+x /home/batan/lc-bin/install.sh
     sudo bash /home/batan/lc-bin/install.sh
-    ```
+  ```
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>
