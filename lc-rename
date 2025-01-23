@@ -1,0 +1,26 @@
+#!/bin/bash
+
+clear
+ls
+echo -e "\033[34m============================================\033[0m"
+echo -e "\033[37mRename all files?\033[0m"
+echo -e "\033[31m   >>> " "\033[37m1\033[34m)" "\033[37m Yes\033[0m"
+echo -e "\033[31m   >>> " "\033[37m2\033[34m)" "\033[37m No \033[0m"
+echo -e "\033[34m============================================\033[0m"
+#read -p ' >>>   ' abc
+if [[ $abc == "2" ]]; then
+	clear
+	exit 0
+else
+	clear
+	rename  's/ /_/g' *
+	rename  's/!//g' *
+	rename  "s/\'//g" *
+	rename  's/\&//g' *
+	rename  's/\,//g' *
+	rename 's/\[.*\]//g' *
+	rename  's/\(.*\)//g' *
+	rename 's/_\./\./g' *
+fi
+clear
+

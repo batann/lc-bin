@@ -1,0 +1,10 @@
+#!/bin/bash
+clear
+
+
+echo -e "\033[30m\033[47mRunning lc-get-podcasts on \033[31m/home/batan/.config/lc-mashpodder"
+echo -e "\033[30m\033[47m and updateing your podcast episodes to current date  \033[0m "
+echo -e "\033[30m\033[47mYour data directory is on\033[31m/media/batan/100/Podcasts  \033[0m "
+
+sudo -u $USER bash /home/batan/.config/lc-mashpodder/lc-get-podcasts
+

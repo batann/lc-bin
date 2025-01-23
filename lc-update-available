@@ -1,0 +1,13 @@
+#!/bin/bash
+
+b="\033[34m"
+g="\033[32m"
+w="\033[37m"
+bl="\033[30m"
+r="\033[31m"
+n="\033[0m"
+
+
+updates_available=$(aptitude search -F '%p' --disable-columns '~U'|wc -l)
+clear
+echo -e "${b}You have ${r}$updates_available ${b}updates available!!!${n}"

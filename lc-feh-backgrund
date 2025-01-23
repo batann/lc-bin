@@ -1,0 +1,7 @@
+#!/bin/bash
+BASE_DIR="/usr/share/backgrounds/"
+
+feh --bg-fill --randomize $BASE_DIR/*
+sleep 5
+/usr/bin/lc-feh-background
+
