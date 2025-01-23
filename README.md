@@ -92,7 +92,7 @@ To get a local copy up and running follow these simple example steps.
 
 ### Prerequisites
 
-This is an example of how to list things you need to use the software and how to install them.
+There are n prerequisites.
 * npm
   ```sh
   npm install npm@latest -g
@@ -119,6 +119,11 @@ This is an example of how to list things you need to use the software and how to
 
 The scripts gete system-wide installed. Simply run each script as a binnary.
 a list of commands can be obtained with lc-commands.
+To preform a dns test, just run:
+```
+lc-dnstest
+```
+
 
 
 
