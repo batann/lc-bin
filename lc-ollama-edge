@@ -1,0 +1,37 @@
+#!/bin/bash
+rm out.mp3 out.txt
+result=$(yad --text="Text to Speech" --borders=30 --image-on-top --image="/home/batan/100/icons/tts1.png" --title="TTS"  \
+  --buttons-layout="spread" --form --title="Text-to-Speech Options" \
+  --field="Voice":CB "en-US-AndrewMultilingualNeural! en-US-AndrewNeural! en-US-AriaNeural! en-US-AvaMultilingualNeural! en-US-AvaNeural! en-US-BrianMultilingualNeural! en-US-BrianNeural! en-US-ChristopherNeural! en-US-EmmaMultilingualNeural! en-US-EmmaNeural! en-US-EricNeural! en-US-GuyNeural! en-US-JennyNeural! en-US-MichelleNeural! en-US-RogerNeural! en-US-SteffanNeural"  \
+  --field="Text:" "" \
+  --button="Cancel:1" --button="Speak!:0" --width=500 --height=300)
+# Check if the user canceled
+if [ $? -ne 0 ]; then
+  echo "Canceled by user."
+  exit 1
+fi
+
+# Parse the yad output
+voice=$(echo "$result" | cut -d '|' -f 1)
+text=$(echo "$result" | cut -d '|' -f 2)
+
+# Check if text is empty
+if [ -z "$text" ]; then
+  yad --title="Error" --text="You must enter text for TTS!" --button=OK
+  exit 1
+fi
+
+# Generate the TTS output using edge-tts
+output_file="out.mp3"
+
+printf "$text"|ollama run llama3.2|tee out.txt
+
+/home/batan/.local/bin/edge-tts --voice "$voice" --file out.txt --write-media "$output_file"
+
+# Play the audio file
+if [ -f "$output_file" ]; then
+  play "$output_file"
+else
+  yad --title="Error" --text="Failed to generate TTS audio." --button=OK
+  exit 1
+fi

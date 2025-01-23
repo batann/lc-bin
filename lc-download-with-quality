@@ -1,0 +1,151 @@
+#!/bin/bash
+clear
+LIST="/home/batan/Downloads/tempurl.list.$(date +%j.%s).txt"
+echo -e "\033[32m---\033[36m[[[\033[35m >>>\033[37m LC \033[31m-\033[37m Linux\033[31m -\033[37m Downloads\033[35m <<<\033[36m ]]]\033[32m---\033[0m"
+echo -e "           ----------------------"
+
+clear
+echo -e "\033[34mPlease enter the directory to donload to...\033[33m"
+tput cup 0 45
+read -e -p '   >>>   ' -i '/home/batan/Videos/new/' DIRECTORY
+if [[ ! -d $DIRECTORY ]]; then
+mkdir -p $DIRECTORY
+fi
+cd $DIRECTORY
+clear
+
+xxx=$(wmctrl -l|grep Terminal|tail -n1|cut -c 1-11)
+xdotool getactivewindow windowsize 1200 80
+xdotool getactivewindow windowmove 1920 0
+xdotool windowraise
+xdotool focus
+xdotool windowactivate
+wmctrl -i -r $xxx -b add,above
+counter=1
+declare -a urls
+declare -a qualities
+
+clear
+
+# Function to read URLs
+read_urls() {
+    while :; do
+        clear
+        echo -e "\033[34mPlease enter your \033[33m$counter.\033[34m URL\033[0m"
+        read -p 'url  >>>   ' url
+        if [[ -z $url ]]; then
+            break
+        fi
+        echo $url >> $LIST
+	urls+=("$url")
+        ((counter++))
+    done
+}
+
+# Function to select quality for each URL
+select_qualities() {
+    for i in "${!urls[@]}"; do
+        options=$(/home/batan/.local/bin/yt-dlp -F "${urls[i]}" | awk '{print $1}' | grep '[0-9]p')
+        echo -e "\033[34mSelect quality for URL $((i+1))\033[0m"
+        select quality in $options; do
+            qualities+=("$quality")
+            break
+        done
+    done
+}
+
+# Function to download videos
+download_videos() {
+    for i in "${!urls[@]}"; do
+        clear
+        echo -e "Downloading your $((i+1)). URL"
+        echo -e "=============================="
+        /home/batan/.local/bin/yt-dlp --restrict-filenames -f "${qualities[i]}" "${urls[i]}"
+    done
+        rename  's/ /_/g' *
+	rename  's/!//g' *
+	rename  's/&//g' *
+	rename  's/,//g' *
+	rename 's/\[.*\]//g' *
+	rename  's/\(.*\)//g' *
+	rename  's/\".*\"//g' *
+	rename 's/_\./\./g' *
+    rename 's/-\./\./g' *
+    
+}
+
+#funktion to download MP3s
+
+download_music() {
+    for i in "${!urls[@]}"; do
+        clear
+        echo -e "Downloading your $((i+1)). URL"
+        echo -e "=============================="
+        /home/batan/.local/bin/yt-dlp -x --audio-format mp3 --restrict-filenames "${urls[i]}"
+	done
+        rename  's/ /_/g' *
+	rename  's/!//g' *
+	rename  's/&//g' *
+	rename  's/,//g' *
+	rename 's/\[.*\]//g' *
+	rename  's/\(.*\)//g' *
+	rename  's/\".*\"//g' *
+	rename 's/_\./\./g' *
+	rename 's/-\./\./g' *
+}
+
+
+# Main script execution
+read_urls
+lines=${#urls[@]}
+clear
+echo -e "\033[34mYou have entered\033[31m $lines\033[34m URLs\033[0m"
+echo -e '\033[34mEnter\033[31m [ANY]\033[34m to continue...\033[0m'
+read -n1 -p '   >>>   ' lol
+clear
+
+echo -e "\033[32m---\033[36m[[[\033[35m >>>\033[37m LC \033[31m-\033[37m Linux\033[31m -\033[37m Downloads\033[35m <<<\033[36m ]]]\033[32m---\033[0m"
+echo -e "           ----------------------"
+echo -e "\033[32mWhat type of media do you want to download:"
+echo -e "\033[31m   >>>  \033[32m 1\033[33m)\033[37m mp3"
+echo -e "\033[31m   >>>  \033[32m 2\033[33m)\033[37m mp4"
+read -p "   >>>   " MEDIA
+if [[ $MEDIA == "1" ]]; then
+download_music
+clear
+echo -e "MP3s downloaded"
+exit 0
+fi
+
+
+clear
+echo -e "\033[34mPlease enter the directory to donload to...\033[33m"
+tput cup 0 45
+read -e -p '   >>>   ' -i '/home/batan/Videos/new/' DIRECTORY
+if [[ ! -d $DIRECTORY ]]; then
+mkdir -p $DIRECTORY
+fi
+cd $DIRECTORY
+clear
+
+xxx=$(wmctrl -l|grep Terminal|tail -n1|cut -c 1-11)
+xdotool getactivewindow windowsize 1200 80
+
+
+
+
+
+
+
+read -e -p "Do you want to add the video quality to download:   >>>   " -i 'No' yyy
+if [[ "$yyy" == "Yes" ]]; then
+select_qualities
+fi
+clear
+for i in "${!urls[@]}"; do
+    echo -e "\033[34mFor URL\033[31m $((i+1))\033[34m, you selected quality \033[31m${qualities[i]}\033[0m"
+done
+echo -e "================================="
+echo -e '\033[34mEnter\033[31m [ANY]\033[34m to continue ...\033[0m' 
+read -n1 -p '   >>>   ' lol
+download_videos
