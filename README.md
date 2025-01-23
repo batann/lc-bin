@@ -103,6 +103,7 @@ There are n prerequisites.
     1. Clone repository
     2. Assign permissions
     3. Run install
+  
     ```sh
     git clone https://github.com/batann/lc-bin
     sudo chmod a+x /home/batan/lc-bin/install.sh
