@@ -6,8 +6,8 @@
 <!-- PROJECT LOGO -->
 <br />
 <div align="center">
-  <a href="https://github.com/batann/lc-bin/images/logo.png">
-    <img src="images/logo.png" alt="Logo" width="484" height="200">
+  <a href="https://github.com/batann/lc-bin/logo.png">
+    <img src="logo.png" alt="Logo" width="484" height="200">
   </a>
 
 <h3 align="center">LC-Linux</h3>
